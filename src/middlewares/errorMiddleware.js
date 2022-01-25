@@ -1,0 +1,29 @@
+const errorTypes = {
+  UniqueViolationError: 409,
+};
+
+const errorMessages = {
+  UniqueViolationError: 'Already exists',
+};
+
+const notFound = (req, res, next) => {
+  console.log('HELLo', req);
+  const error = new Error(`Not Found - ${req.originalUrl}`);
+  console.log(error);
+  res.status(404);
+  next(error);
+};
+
+const errorHandler = (error, req, res, next) => {
+  const statusCode =
+    res.statusCode === 200 ? errorTypes[error.name] || 500 : res.statusCode;
+  res.status(statusCode);
+  res.json({
+    status: statusCode,
+    message: errorMessages[error.name] || error.message,
+    stack: process.env.NODE_ENV === 'production' ? '🍾' : error.stack,
+    errors: error.errors || undefined,
+  });
+};
+
+export { notFound, errorHandler };

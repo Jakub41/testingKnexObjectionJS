@@ -1,0 +1,44 @@
+{
+  "name": "pokedex",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon src/server.js | pino-colada",
+    "lint": "eslint --ignore-pattern=src/**/*.spec* ./src",
+    "test": "jest src/* -i --coverage",
+    "test:watch": "yarn test --watch",
+    "db:migrate:make": "npx knex migrate:make",
+    "db:migrate": "npx knex migrate:latest",
+    "db:rollback": "npx knex migrate:rollback"
+  },
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^14.2.0",
+    "express": "~4.17.2",
+    "express-pino-logger": "^7.0.0",
+    "helmet": "^5.0.2",
+    "knex": "^1.0.1",
+    "morgan": "~1.10.0",
+    "objection": "^3.0.1",
+    "papaparse": "^5.3.1",
+    "pg": "^8.7.1",
+    "pino": "^7.6.4",
+    "pino-pretty": "^7.5.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.12",
+    "@babel/preset-env": "^7.16.11",
+    "@typescript-eslint/parser": "^5.10.0",
+    "babel-jest": "^27.4.6",
+    "eslint": "^8.7.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.4.7",
+    "nodemon": "^2.0.15",
+    "pino-colada": "^2.2.2",
+    "prettier": "^2.5.1",
+    "supertest": "^6.2.2"
+  }
+}

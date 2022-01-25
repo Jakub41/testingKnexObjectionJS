@@ -1,0 +1,12 @@
+environment.env
+.env
+node_modules/
+yarn.lock
+coverage
+volumes/pgadmin-data
+volumes/postgres-data
+.vscode
+.cg.yml
+.DS_Store
+.editorconfig
+volumes/.DS_Store

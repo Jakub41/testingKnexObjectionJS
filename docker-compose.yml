@@ -1,0 +1,50 @@
+version: '3.9'
+services:
+  backend-node:
+    build: .
+    container_name: pokedex-backend-node
+    depends_on:
+      database-postgres:
+        condition: service_started
+    ports:
+      - '8800:8800'
+    restart: always
+    volumes:
+      - ./:/home/node/code
+  database-postgres:
+    container_name: pokedex-db-postgres
+    env_file:
+      - .env
+    image: postgres:14.1-alpine
+    networks:
+      backend-database: null
+      postgres-pgadmin: null
+    ports:
+      - '5343:5432'
+    restart: always
+    volumes:
+      - ./volumes/postgres-data:/var/lib/postgresql/data
+      - ./volumes/postgres-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U root']
+      interval: 10s
+      start_period: 10s
+      timeout: 4s
+      retries: 3
+  db-admin-pgadmin:
+    container_name: pokedex-dbadmin-pgadmin
+    depends_on:
+      database-postgres:
+        condition: service_started
+    env_file:
+      - .env
+    image: dpage/pgadmin4:latest
+    networks:
+      postgres-pgadmin: null
+    ports:
+      - '8900:80'
+    volumes:
+      - ./volumes/pgadmin-data:/var/lib/pgadmin
+networks:
+  backend-database: {}
+  postgres-pgadmin: {}
