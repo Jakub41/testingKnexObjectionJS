@@ -6,9 +6,8 @@ import knexConfig from './knexfile.js';
 const env = config.NODE_ENV || 'development';
 
 function connectDB() {
-  const connectionConfig = knexConfig[env];
-  const connection = knex(connectionConfig);
-  Model.knex(connection);
+  const connectionConfig = knex(knexConfig[env]);
+  Model.knex(connectionConfig);
 }
 
 export default connectDB;

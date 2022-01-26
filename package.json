@@ -9,7 +9,10 @@
     "test:watch": "yarn test --watch",
     "db:migrate:make": "npx knex migrate:make",
     "db:migrate": "npx knex migrate:latest",
-    "db:rollback": "npx knex migrate:rollback"
+    "db:rollback": "npx knex migrate:rollback",
+    "db:down": "npx knex migrate:down",
+    "db:seeds:make": "npx knex seed:make",
+    "db:seeds:run": "npx knex seed:run"
   },
   "type": "module",
   "dependencies": {

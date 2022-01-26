@@ -4,8 +4,8 @@ import log from '../../src/utils/logger.js';
 
 const router = express.Router();
 
-const pokemonCtrl = PokemonsController();
+const pokemonCtrl = new PokemonsController();
 
-router.use('/pokemons', pokemonCtrl.getPokemons);
+router.get('/pokemons', pokemonCtrl.getPokemons);
 
 export default router;

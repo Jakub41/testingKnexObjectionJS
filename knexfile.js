@@ -1,4 +1,5 @@
 import config from './config/appConfig.js';
+import log from './src/utils/logger.js';
 
 const development = {
   client: 'pg',
@@ -8,10 +9,9 @@ const development = {
     database: config.POSTGRES_DB,
     user: config.POSTGRES_USER,
     password: config.POSTGRES_PASSWORD,
-
   },
   pool: {
-    min: 0,
+    min: 5,
     max: 50,
     createTimeoutMillis: 3000,
     acquireTimeoutMillis: 30000,
@@ -19,10 +19,23 @@ const development = {
     reapIntervalMillis: 1000,
     createRetryIntervalMillis: 100,
     propagateCreateError: false,
+    afterCreate: function (conn, done) {
+      conn.query('SELECT 1;', function (err) {
+        if (err) {
+          log.error('Connection to DB failed %s', err);
+        }
+        done(err, conn);
+      });
+    },
   },
+  debug: true,
   migrations: {
     directory: './src/database/migrations',
   },
+  seeds: {
+    directory: './src/database/seeds',
+  },
+  useNullAsDefault: true,
 };
 
 const test = {};

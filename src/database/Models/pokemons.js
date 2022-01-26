@@ -1,10 +1,8 @@
 import { Model } from 'objection';
 import tableNames from '../../constants/tableNames.js';
 
-class Pokemons extends Model {
+export class Pokemons extends Model {
   static get tableName() {
-    return tableNames.pokemons;
+    return 'test_table';
   }
 }
-
-export default Pokemons;
