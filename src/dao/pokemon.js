@@ -1,19 +1,19 @@
 import * as Model from '../database/Models/index.js';
 
-class PokemonsDAO {
+class PokemonDAO {
   selectAll(limit, sortBy, orderBy) {
     const lm = limit || 100;
     const sort = sortBy || 'id';
     const dir = orderBy || 'ASC';
 
-    return Model.Pokemons.query().limit(lm).orderBy(sort, dir);
+    return Model.Pokemon.query().limit(lm).orderBy(sort, dir);
   }
 
   insertAll(data) {
-    return Model.Pokemons.query().insert(data);
+    return Model.Pokemon.query().insert(data);
   }
 }
 
-export default function pokemonsDAO() {
-  return new PokemonsDAO();
+export default function pokemonDAO() {
+  return new PokemonDAO();
 }

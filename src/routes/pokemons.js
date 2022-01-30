@@ -1,11 +1,12 @@
-import { PokemonsController } from '../controllers/index.js';
+import * as Ctrl from '../controllers/index.js';
+
 import express from 'express';
-import log from '../../src/utils/logger.js';
 
 const router = express.Router();
 
-const pokemonCtrl = new PokemonsController();
+const pokemons = '/pokemons';
 
-router.get('/pokemons', pokemonCtrl.getPokemons);
+router.get(pokemons, Ctrl.PokemonsController().getPokemons);
+router.post(pokemons + '/:fileName', Ctrl.PokemonsController().postCsvParse);
 
 export default router;

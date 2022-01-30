@@ -7,9 +7,7 @@ const errorMessages = {
 };
 
 const notFound = (req, res, next) => {
-  console.log('HELLo', req);
   const error = new Error(`Not Found - ${req.originalUrl}`);
-  console.log(error);
   res.status(404);
   next(error);
 };

@@ -1,27 +1,39 @@
-import { Pokemons } from '../../database/Models/pokemons.js';
-// import PokemonsService from '../../services/pokemons.js';
+import PokemonsService from '../../services/pokemons.js';
+import lodash from 'lodash';
 import log from '../../utils/logger.js';
+import { parseCsv } from '../../utils/parseCsv.js';
 
+const service = PokemonsService();
+
+const { isEmpty } = lodash;
 class PokemonsController {
   async getPokemons(req, res, next) {
     try {
-      // const scrappy = await Pokemons.transaction(async (trx) => {
-      //   const jennifer = await Pokemons.query(trx);
-      //   return jennifer;
-      // });
-      const r = await Pokemons.query();
-      // const pokemons = await PokemonsService().getPokemons();
-      // const pokemons = await Pokemons.query();
-      // if (pokemons) res.json(pokemons);
-      console.log('scrappy', r);
-      res.json({
-        msg: 'Pokedex is empty!!!',
-      });
+      log.info('Calling GET Pokemons controller');
+      const { limit, order, direction } = req.query;
+      const pokemons = await service.getPokemons(limit, order, direction);
+      if (isEmpty(pokemons)) return res.json({ msg: 'Sorry no data! 🙈' });
+      res.json(pokemons);
     } catch (error) {
-      log.error('Error! %s', error.message);
+      log.error('Fetching Pokemons Error! %s', error.message);
+      next(error);
+    }
+  }
+
+  async postCsvParse(req, res, next) {
+    try {
+      log.info('Calling POST parse controller');
+      const { fileName } = req.params;
+      const parsedCsv = await parseCsv(fileName);
+      await service.postPokemons(parsedCsv);
+      res.json(parsedCsv);
+    } catch (error) {
+      log.error('Parsing Error! %s', error.message);
       next(error);
     }
   }
 }
 
-export default PokemonsController;
+export default function pokemonsController() {
+  return new PokemonsController();
+}

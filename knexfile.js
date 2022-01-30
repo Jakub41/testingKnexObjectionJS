@@ -1,6 +1,8 @@
 import config from './config/appConfig.js';
 import log from './src/utils/logger.js';
 
+const dev = config.NODE_ENV === 'development';
+
 const development = {
   client: 'pg',
   connection: {
@@ -18,7 +20,6 @@ const development = {
     idleTimeoutMillis: 30000,
     reapIntervalMillis: 1000,
     createRetryIntervalMillis: 100,
-    propagateCreateError: false,
     afterCreate: function (conn, done) {
       conn.query('SELECT 1;', function (err) {
         if (err) {
@@ -28,7 +29,7 @@ const development = {
       });
     },
   },
-  debug: true,
+  debug: dev ? true : false,
   migrations: {
     directory: './src/database/migrations',
   },

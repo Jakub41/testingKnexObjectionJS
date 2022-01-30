@@ -6,6 +6,6 @@ COPY package*.json ./
 USER node
 RUN yarn install
 COPY --chown=node:node . .
-RUN yarn run build
 EXPOSE 8800
+
 ENTRYPOINT [ "yarn", "run", "dev" ]

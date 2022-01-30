@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-dotenv.config()
+dotenv.config();
 
 const required = [
   'POSTGRES_HOST',
@@ -19,7 +19,7 @@ const envs = {
 };
 
 (() => {
-  const notMeetRequirements = required.filter(v => !process.env[v]);
+  const notMeetRequirements = required.filter((v) => !process.env[v]);
   if (notMeetRequirements.length) {
     // eslint-disable-next-line no-console
     console.log(
@@ -29,7 +29,7 @@ const envs = {
     );
     process.exit(1);
   }
-  required.forEach(v => {
+  required.forEach((v) => {
     envs[v] = process.env[v];
   });
 })();
